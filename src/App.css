@@ -1,44 +1,27 @@
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
+.loading-screen {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  background: #1a1a1a;
 }
 
-body {
-  font-family: var(--font-family-base);
-  background-color: var(--color-background);
-  color: var(--color-text);
-  line-height: 1.6;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+.loading-spinner {
+  width: 48px;
+  height: 48px;
+  border: 4px solid rgba(255, 255, 255, 0.1);
+  border-top-color: #667eea;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
 }
 
-#root {
-  height: 100vh;
-  overflow: hidden;
+@keyframes spin {
+  to { transform: rotate(360deg); }
 }
 
-/* Scrollbar styling */
-::-webkit-scrollbar {
-  width: 8px;
-  height: 8px;
-}
-
-::-webkit-scrollbar-track {
-  background: var(--color-surface);
-}
-
-::-webkit-scrollbar-thumb {
-  background: var(--color-border);
-  border-radius: 4px;
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background: var(--color-text-secondary);
-}
-
-/* Selection */
-::selection {
-  background-color: var(--color-primary);
-  color: var(--color-cream-50);
+.loading-screen p {
+  color: #a0a0a0;
+  font-size: 14px;
 }
