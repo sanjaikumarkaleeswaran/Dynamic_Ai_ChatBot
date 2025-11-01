@@ -5,6 +5,7 @@ import Login from './components/Login';
 import Register from './components/Register';
 import { AuthProvider, useAuth } from './context/AuthContext';
 import { ChatHistoryProvider } from './context/ChatHistoryContext';
+import { ThemeProvider } from './context/ThemeContext';
 
 function AppContent() {
   const { user, loading } = useAuth();
@@ -40,13 +41,14 @@ function AppContent() {
 
 function App() {
   return (
-    <AuthProvider>
-      <ChatHistoryProvider>
-        <AppContent />
-      </ChatHistoryProvider>
-    </AuthProvider>
+    <ThemeProvider>
+      <AuthProvider>
+        <ChatHistoryProvider>
+          <AppContent />
+        </ChatHistoryProvider>
+      </AuthProvider>
+    </ThemeProvider>
   );
 }
 
 export default App;
-  

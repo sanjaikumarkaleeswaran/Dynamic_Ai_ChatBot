@@ -44,7 +44,6 @@ export const ChatHistoryProvider = ({ children }) => {
     localStorage.removeItem('chatbot-conversations');
   };
 
-  // This function updates conversation titles
   const updateConversationTitle = (id, newTitle) => {
     setConversations(prev => 
       prev.map(conv => 
@@ -52,19 +51,17 @@ export const ChatHistoryProvider = ({ children }) => {
       )
     );
   };
+  
 
-  // CRITICAL: Make sure this value object includes updateConversationTitle
   return (
-    <ChatHistoryContext.Provider 
-      value={{
-        conversations,
-        saveConversation,
-        loadConversation,
-        deleteConversation,
-        clearAllConversations,
-        updateConversationTitle
-      }}
-    >
+    <ChatHistoryContext.Provider value={{
+      conversations,
+      saveConversation,
+      loadConversation,
+      deleteConversation,
+      clearAllConversations,
+      updateConversationTitle
+    }}>
       {children}
     </ChatHistoryContext.Provider>
   );

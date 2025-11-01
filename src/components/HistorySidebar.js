@@ -1,3 +1,303 @@
+// import React, { useState } from 'react';
+// import { useChatHistory } from '../context/ChatHistoryContext';
+
+// const HistorySidebar = ({ onSelectConversation, onNewConversation, currentChatId }) => {
+//   const { conversations, deleteConversation, clearAllConversations } = useChatHistory();
+//   const [searchQuery, setSearchQuery] = useState('');
+//   const [isOpen, setIsOpen] = useState(true);
+
+//   const filteredConversations = conversations.filter(conv =>
+//     conv.title.toLowerCase().includes(searchQuery.toLowerCase())
+//   );
+
+//   const handleSelectConversation = (conversationId) => {
+//     if (onSelectConversation && typeof onSelectConversation === 'function') {
+//       onSelectConversation(conversationId);
+//     }
+//   };
+
+//   const handleNewConversation = () => {
+//     if (onNewConversation && typeof onNewConversation === 'function') {
+//       onNewConversation();
+//     }
+//   };
+
+//   const handleClearAll = () => {
+//     if (window.confirm('Are you sure you want to delete all conversations?')) {
+//       clearAllConversations();
+//     }
+//   };
+
+//   // Color array for chat items
+//   const borderColors = ['#e91e63', '#00bcd4', '#4caf50', '#ff9800', '#9c27b0', '#f44336'];
+
+//   return (
+//     <>
+//       {/* Main Sidebar Container */}
+//       <div style={{
+//         width: '280px',
+//         height: '100vh',
+//         background: '#2b2d42',  // Dark navy
+//         borderRight: '1px solid rgba(107, 92, 231, 0.2)',
+//         display: 'flex',
+//         flexDirection: 'column',
+//         position: 'fixed',
+//         left: 0,
+//         top: 0,
+//         zIndex: 100,
+//         transform: isOpen ? 'translateX(0)' : 'translateX(-100%)',
+//         transition: 'transform 0.3s ease',
+//         overflowY: 'auto'
+//       }}>
+        
+//         {/* Header */}
+//         <div style={{
+//           padding: '16px',
+//           background: '#1f2937',
+//           display: 'flex',
+//           alignItems: 'center',
+//           justifyContent: 'space-between'
+//         }}>
+//           <div style={{
+//             display: 'flex',
+//             alignItems: 'center',
+//             gap: '10px',
+//             fontSize: '18px',
+//             fontWeight: '600',
+//             color: 'white'
+//           }}>
+//             <div style={{
+//               width: '36px',
+//               height: '36px',
+//               padding: '8px',
+//               background: 'linear-gradient(135deg, #6b5ce7 0%, #7b6af0 100%)',
+//               borderRadius: '10px',
+//               display: 'flex',
+//               alignItems: 'center',
+//               justifyContent: 'center'
+//             }}>
+//               <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2">
+//                 <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+//               </svg>
+//             </div>
+//             <span>Chat History</span>
+//           </div>
+//           <button
+//             onClick={() => setIsOpen(false)}
+//             style={{
+//               width: '32px',
+//               height: '32px',
+//               display: 'flex',
+//               alignItems: 'center',
+//               justifyContent: 'center',
+//               background: 'transparent',
+//               border: '1px solid rgba(255, 255, 255, 0.1)',
+//               borderRadius: '6px',
+//               color: 'rgba(255, 255, 255, 0.7)',
+//               cursor: 'pointer'
+//             }}
+//           >
+//             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+//               <line x1="18" y1="6" x2="6" y2="18"></line>
+//               <line x1="6" y1="6" x2="18" y2="18"></line>
+//             </svg>
+//           </button>
+//         </div>
+
+//         {/* New Conversation Button - Purple Gradient */}
+//         <button
+//           onClick={handleNewConversation}
+//           style={{
+//             margin: '16px',
+//             padding: '12px 16px',
+//             background: 'linear-gradient(135deg, #6b5ce7 0%, #7b6af0 100%)',
+//             color: 'white',
+//             border: 'none',
+//             borderRadius: '10px',
+//             fontSize: '14px',
+//             fontWeight: '600',
+//             cursor: 'pointer',
+//             display: 'flex',
+//             alignItems: 'center',
+//             justifyContent: 'center',
+//             gap: '8px',
+//             boxShadow: '0 4px 12px rgba(107, 92, 231, 0.3)',
+//             transition: 'transform 0.2s'
+//           }}
+//           onMouseEnter={(e) => e.currentTarget.style.transform = 'translateY(-2px)'}
+//           onMouseLeave={(e) => e.currentTarget.style.transform = 'translateY(0)'}
+//         >
+//           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+//             <line x1="12" y1="5" x2="12" y2="19"></line>
+//             <line x1="5" y1="12" x2="19" y2="12"></line>
+//           </svg>
+//           Start New Conversation
+//         </button>
+
+//         {/* Search Bar */}
+//         <div style={{
+//           padding: '0 16px 16px 16px',
+//           borderBottom: '1px solid rgba(107, 92, 231, 0.15)'
+//         }}>
+//           <input
+//             type="text"
+//             placeholder="Search conversations..."
+//             value={searchQuery}
+//             onChange={(e) => setSearchQuery(e.target.value)}
+//             style={{
+//               width: '100%',
+//               padding: '10px 12px',
+//               background: 'rgba(107, 92, 231, 0.08)',
+//               border: '1px solid rgba(107, 92, 231, 0.2)',
+//               borderRadius: '8px',
+//               color: 'white',
+//               fontSize: '14px',
+//               outline: 'none'
+//             }}
+//           />
+//         </div>
+
+//         {/* Chat History List */}
+//         <div style={{
+//           flex: 1,
+//           overflowY: 'auto',
+//           padding: '12px'
+//         }}>
+//           {filteredConversations.length === 0 ? (
+//             <div style={{
+//               padding: '40px 16px',
+//               textAlign: 'center',
+//               color: 'rgba(255, 255, 255, 0.4)'
+//             }}>
+//               <svg width="56" height="56" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" style={{ margin: '0 auto 16px', opacity: 0.3 }}>
+//                 <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+//               </svg>
+//               <div style={{ fontSize: '15px', fontWeight: '600', marginBottom: '6px', color: 'rgba(255, 255, 255, 0.7)' }}>
+//                 No conversations yet
+//               </div>
+//               <div style={{ fontSize: '13px', color: 'rgba(255, 255, 255, 0.5)' }}>
+//                 Start a new chat to begin
+//               </div>
+//             </div>
+//           ) : (
+//             filteredConversations.map((conversation, index) => (
+//               <div
+//                 key={conversation.id}
+//                 onClick={() => handleSelectConversation(conversation.id)}
+//                 style={{
+//                   padding: '16px',
+//                   marginBottom: '12px',
+//                   borderRadius: '14px',
+//                   cursor: 'pointer',
+//                   borderLeft: `4px solid ${borderColors[index % borderColors.length]}`,
+//                   background: currentChatId === conversation.id 
+//                     ? 'rgba(107, 92, 231, 0.2)' 
+//                     : 'rgba(255, 255, 255, 0.04)',
+//                   minHeight: '70px',
+//                   display: 'flex',
+//                   flexDirection: 'column',
+//                   justifyContent: 'center',
+//                   transition: 'all 0.2s',
+//                   boxShadow: currentChatId === conversation.id 
+//                     ? '0 2px 8px rgba(107, 92, 231, 0.2)' 
+//                     : 'none'
+//                 }}
+//                 onMouseEnter={(e) => {
+//                   e.currentTarget.style.background = 'rgba(107, 92, 231, 0.15)';
+//                   e.currentTarget.style.transform = 'translateX(2px)';
+//                 }}
+//                 onMouseLeave={(e) => {
+//                   e.currentTarget.style.background = currentChatId === conversation.id 
+//                     ? 'rgba(107, 92, 231, 0.2)' 
+//                     : 'rgba(255, 255, 255, 0.04)';
+//                   e.currentTarget.style.transform = 'translateX(0)';
+//                 }}
+//               >
+//                 <div style={{
+//                   fontSize: '15px',
+//                   fontWeight: '600',
+//                   color: 'white',
+//                   marginBottom: '8px',
+//                   whiteSpace: 'nowrap',
+//                   overflow: 'hidden',
+//                   textOverflow: 'ellipsis',
+//                   lineHeight: '1.4'
+//                 }}>
+//                   {conversation.title}
+//                 </div>
+//                 <div style={{
+//                   display: 'flex',
+//                   justifyContent: 'space-between',
+//                   fontSize: '12px',
+//                   color: 'rgba(255, 255, 255, 0.5)',
+//                   marginTop: '4px'
+//                 }}>
+//                   <span style={{ fontSize: '11px' }}>
+//                     {new Date(conversation.createdAt).toLocaleDateString()}
+//                   </span>
+//                   <span style={{
+//                     fontSize: '11px',
+//                     padding: '3px 10px',
+//                     background: 'rgba(107, 92, 231, 0.35)',
+//                     borderRadius: '12px',
+//                     color: 'rgba(255, 255, 255, 0.95)',
+//                     fontWeight: '500'
+//                   }}>
+//                     {conversation.messages?.length || 0} messages
+//                   </span>
+//                 </div>
+//               </div>
+//             ))
+//           )}
+//         </div>
+
+//         {/* Clear All Button */}
+//         {conversations.length > 0 && (
+//           <div style={{
+//             padding: '16px',
+//             borderTop: '1px solid rgba(107, 92, 231, 0.2)'
+//           }}>
+//             <button
+//               onClick={handleClearAll}
+//               style={{
+//                 width: '100%',
+//                 padding: '11px',
+//                 background: 'transparent',
+//                 border: '1px solid rgba(255, 84, 89, 0.4)',
+//                 borderRadius: '10px',
+//                 color: '#ff5459',
+//                 fontSize: '13px',
+//                 fontWeight: '500',
+//                 cursor: 'pointer',
+//                 display: 'flex',
+//                 alignItems: 'center',
+//                 justifyContent: 'center',
+//                 gap: '6px',
+//                 transition: 'all 0.2s'
+//               }}
+//               onMouseEnter={(e) => {
+//                 e.currentTarget.style.background = 'rgba(255, 84, 89, 0.12)';
+//                 e.currentTarget.style.borderColor = 'rgba(255, 84, 89, 0.6)';
+//               }}
+//               onMouseLeave={(e) => {
+//                 e.currentTarget.style.background = 'transparent';
+//                 e.currentTarget.style.borderColor = 'rgba(255, 84, 89, 0.4)';
+//               }}
+//             >
+//               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+//                 <polyline points="3 6 5 6 21 6"></polyline>
+//                 <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+//               </svg>
+//               Clear All Conversations
+//             </button>
+//           </div>
+//         )}
+//       </div>
+//     </>
+//   );
+// };
+
+// export default HistorySidebar;
 import React, { useState } from 'react';
 import { useChatHistory } from '../context/ChatHistoryContext';
 import './HistorySidebar.css';
