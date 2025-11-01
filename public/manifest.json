@@ -1,0 +1,9 @@
+{
+  "short_name": "AI Chatbot",
+  "name": "Advanced AI Chatbot",
+  "icons": [],
+  "start_url": ".",
+  "display": "standalone",
+  "theme_color": "#21808d",
+  "background_color": "#fcfcf9"
+}
